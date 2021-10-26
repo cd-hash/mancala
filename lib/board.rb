@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Board
   attr_accessor :cups
 
@@ -29,10 +31,13 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
-    @cups[start_pos].each do |stone|
-      
+    counter = 1
+    until @cups[start_pos].empty?
+      # debugger
+      stone = @cups[start_pos].pop()
+      @cups[counter] << stone
+      counter += 1
     end
-    @cups[start_pos].clear # pick up all stones in the cup
   end
 
   def next_turn(ending_cup_idx)
