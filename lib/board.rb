@@ -4,8 +4,8 @@ class Board
   attr_accessor :cups
 
   def initialize(name1, name2)
-    @player1 = name1
-    @player2 = name2
+    @player1 = name1 #player 1 is always side 1
+    @player2 = name2 #player 2 is always side 2
     @cups = Array.new(14) {Array.new(4)}
     place_stones()
   end
@@ -32,16 +32,27 @@ class Board
 
   def make_move(start_pos, current_player_name)
     counter = 1
+    nextPos = start_pos
     until @cups[start_pos].empty?
+      nextPos += 1
       # debugger
-      stone = @cups[start_pos].pop()
-      @cups[counter] << stone
-      counter += 1
+      if nextPos > 13
+        nextPos = 0
+      end
+      if (current_player_name == @player1 && nextPos == 13) || (current_player_name == @player2 && nextPos == 6)
+        next
+      else
+        stone = @cups[start_pos].pop()
+        @cups[nextPos] << stone
+      end
     end
+    # render()
+    next_turn(nextPos)
   end
 
   def next_turn(ending_cup_idx)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    # if player ends in own cup return prompt 
   end
 
   def render
