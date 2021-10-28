@@ -46,13 +46,15 @@ class Board
         @cups[nextPos] << stone
       end
     end
-    # render()
-    next_turn(nextPos)
+    render()
+    return next_turn(nextPos)
   end
 
   def next_turn(ending_cup_idx)
-    # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
-    # if player ends in own cup return prompt 
+    #helper method to determine whether make_move returns :switch, :prompt, or ending_cup_idx
+    return :prompt if ending_cup_idx == 6 || ending_cup_idx == 13 # if player ends in current players points cup return prompt current player always skips the opponents points cup
+    return :switch if @cups[ending_cup_idx].length == 1 # if at the end of your turn there is only one stone in the cup then that stone was just placed there and does not count to a full cup
+    return ending_cup_idx # if player ends on cup with stones in it return that cups location
   end
 
   def render
